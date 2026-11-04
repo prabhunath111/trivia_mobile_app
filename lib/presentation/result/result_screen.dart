@@ -63,7 +63,7 @@ class ResultScreen extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: OutlinedButton(
+                    child: ElevatedButton(
                       onPressed: () => context.go('/'),
                       child: const Text('Home'),
                     ),
