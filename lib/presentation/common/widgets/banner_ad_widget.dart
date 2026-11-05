@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -20,11 +22,10 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   @override
   void initState() {
     super.initState();
-    _loadAd();
+    _loadAd(AdService.bannerAdUnitId);
   }
 
-  void _loadAd() {
-    final adUnitId = AdService.bannerAdUnitId;
+  void _loadAd(String adUnitId, {bool isFallback = false}) {
     if (adUnitId.isEmpty) return;
 
     _bannerAd = BannerAd(
@@ -40,8 +41,18 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
           }
         },
         onAdFailedToLoad: (ad, error) {
-          debugPrint('BannerAd failed to load: $error');
+          debugPrint('BannerAd failed to load ($adUnitId): $error');
           ad.dispose();
+          if (mounted) {
+            setState(() {
+              _isLoaded = false;
+            });
+          }
+
+          // Fallback to official test banner ID if custom banner ID gets No Fill during testing
+          if (!isFallback && Platform.isAndroid && adUnitId != 'ca-app-pub-3940256099942544/6300978111') {
+            _loadAd('ca-app-pub-3940256099942544/6300978111', isFallback: true);
+          }
         },
       ),
     );
