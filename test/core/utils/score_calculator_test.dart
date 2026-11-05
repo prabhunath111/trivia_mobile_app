@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:trivia_master/core/utils/score_calculator.dart';
-import 'package:trivia_master/data/models/game_mode.dart';
+import 'package:trivia_mobile_app/core/utils/score_calculator.dart';
+import 'package:trivia_mobile_app/data/models/game_mode.dart';
 
 void main() {
   final calculator = const ScoreCalculator();

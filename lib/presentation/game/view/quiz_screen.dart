@@ -4,30 +4,51 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../../data/models/game_mode.dart';
+import '../../common/widgets/banner_ad_widget.dart';
 import '../../common/widgets/countdown_timer_bar.dart';
 import '../../common/widgets/option_tile.dart';
 import '../../common/widgets/score_chip.dart';
 import '../../providers/providers.dart';
 import '../state/quiz_state.dart';
 
-class QuizScreen extends ConsumerWidget {
+class QuizScreen extends ConsumerStatefulWidget {
   const QuizScreen({super.key, required this.mode});
 
   final GameMode mode;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(quizViewModelProvider(mode));
-    final viewModel = ref.read(quizViewModelProvider(mode).notifier);
+  ConsumerState<QuizScreen> createState() => _QuizScreenState();
+}
 
-    ref.listen(quizViewModelProvider(mode), (previous, next) {
+class _QuizScreenState extends ConsumerState<QuizScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(adServiceProvider).loadInterstitialAd();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(quizViewModelProvider(widget.mode));
+    final viewModel = ref.read(quizViewModelProvider(widget.mode).notifier);
+    final adService = ref.read(adServiceProvider);
+
+    ref.listen(quizViewModelProvider(widget.mode), (previous, next) {
       if (next.status == QuizStatus.finished) {
-        context.pushReplacement('/result', extra: next);
+        adService.showInterstitialAd(
+          onAdDismissed: () {
+            if (context.mounted) {
+              context.pushReplacement('/result', extra: next);
+            }
+          },
+        );
       }
     });
 
     return Scaffold(
-      appBar: AppBar(title: Text(mode.title)),
+      appBar: AppBar(title: Text(widget.mode.title)),
       body: SafeArea(
         child: switch (state.status) {
           QuizStatus.loading => const Center(child: CircularProgressIndicator()),
@@ -35,9 +56,13 @@ class QuizScreen extends ConsumerWidget {
           QuizStatus.finished => const Center(child: CircularProgressIndicator()),
           QuizStatus.inProgress ||
           QuizStatus.answered =>
-            _QuizBody(mode: mode, state: state, viewModel: viewModel),
+            _QuizBody(mode: widget.mode, state: state, viewModel: viewModel),
         },
       ),
+      bottomNavigationBar: (state.status == QuizStatus.inProgress ||
+              state.status == QuizStatus.answered)
+          ? const BannerAdWidget()
+          : null,
     );
   }
 }

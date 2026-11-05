@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:trivia_master/presentation/common/widgets/option_tile.dart';
+import 'package:trivia_mobile_app/presentation/common/widgets/option_tile.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(home: Scaffold(body: child));

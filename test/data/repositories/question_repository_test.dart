@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:trivia_master/data/datasources/question_local_datasource.dart';
-import 'package:trivia_master/data/models/game_mode.dart';
-import 'package:trivia_master/data/models/question.dart';
-import 'package:trivia_master/data/repositories/question_repository.dart';
+import 'package:trivia_mobile_app/data/datasources/question_local_datasource.dart';
+import 'package:trivia_mobile_app/data/models/game_mode.dart';
+import 'package:trivia_mobile_app/data/models/question.dart';
+import 'package:trivia_mobile_app/data/repositories/question_repository.dart';
 
 class _FakeQuestionLocalDataSource implements QuestionLocalDataSource {
   _FakeQuestionLocalDataSource({
