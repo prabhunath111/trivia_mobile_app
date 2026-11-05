@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import '../../core/services/ad_service.dart';
 import '../../data/datasources/question_local_datasource.dart';
 import '../../data/repositories/question_repository.dart';
 import '../utils/score_calculator.dart';
@@ -19,6 +20,10 @@ void setupServiceLocator() {
 
   getIt.registerLazySingleton<ScoreCalculator>(
     () => const ScoreCalculator(),
+  );
+
+  getIt.registerLazySingleton<AdService>(
+    () => AdService(),
   );
 }
 

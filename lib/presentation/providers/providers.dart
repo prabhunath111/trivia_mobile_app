@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/di/service_locator.dart';
+import '../../core/services/ad_service.dart';
 import '../../core/utils/score_calculator.dart';
 import '../../data/models/game_mode.dart';
 import '../../data/repositories/question_repository.dart';
@@ -26,4 +27,8 @@ final quizViewModelProvider = StateNotifierProvider.autoDispose.family<QuizViewM
     scoreCalculator: ref.watch(scoreCalculatorProvider),
     config: GameConfig.forMode(mode),
   );
+});
+
+final adServiceProvider = Provider<AdService>((ref) {
+  return getIt<AdService>();
 });

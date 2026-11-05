@@ -106,7 +106,7 @@ class QuizViewModel extends StateNotifier<QuizState> {
         mode: _config.mode,
         currentStreak: state.streak,
         secondsRemaining: state.secondsRemaining,
-        secondsAllotted: _config.perQuestionSeconds,
+        secondsAllotted: _config.perQuestionSeconds ?? _config.totalGameSeconds,
       );
     }
 

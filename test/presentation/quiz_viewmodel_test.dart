@@ -1,11 +1,11 @@
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:trivia_master/core/utils/score_calculator.dart';
-import 'package:trivia_master/data/models/game_mode.dart';
-import 'package:trivia_master/data/models/question.dart';
-import 'package:trivia_master/data/repositories/question_repository.dart';
-import 'package:trivia_master/presentation/game/state/quiz_state.dart';
-import 'package:trivia_master/presentation/game/viewmodel/quiz_viewmodel.dart';
+import 'package:trivia_mobile_app/core/utils/score_calculator.dart';
+import 'package:trivia_mobile_app/data/models/game_mode.dart';
+import 'package:trivia_mobile_app/data/models/question.dart';
+import 'package:trivia_mobile_app/data/repositories/question_repository.dart';
+import 'package:trivia_mobile_app/presentation/game/state/quiz_state.dart';
+import 'package:trivia_mobile_app/presentation/game/viewmodel/quiz_viewmodel.dart';
 
 class _FakeQuestionRepository implements QuestionRepository {
   _FakeQuestionRepository(this.questions);
